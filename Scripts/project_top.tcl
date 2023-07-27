@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-# Set the project name
+# Set the name of the project:
 set project_name "vck190"
 
 # Set the project device:
@@ -23,9 +23,10 @@ set board_part xilinx.com:vck190:part0:2.2
 # If using a UI layout, uncomment this line:
 #set ui_name layout.ui
 
-# Set the path to the directory we want to put the Vivado build in. Convention is <PROJECT NAME>_hw
-set proj_dir ../Hardware/${project_name}_hw
 
+# Set the path to the directory we want to put the Vivado build in. Convention is <PROJECT NAME>_hw
+set proj_dir ../Design/Hardware/${project_name}_hw
+   
 create_project -name ${project_name} -force -dir ${proj_dir} -part ${device}
 set_property BOARD_PART ${board_part} [current_project]
 
