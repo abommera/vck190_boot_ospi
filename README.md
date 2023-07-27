@@ -23,7 +23,7 @@ The octal SPI (OSPI) boot mode has an SPI compatible serial bus interface with e
 
 ## Design Block Diagram
 
-![Block Diagram](./Figures/block.PNG)
+![Block Diagram](./Figures/block.png)
 
 ## Directory Structure
 <details>
