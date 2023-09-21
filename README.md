@@ -88,3 +88,27 @@ Recommended general knowledge of:
 
 </details>
 
+## Tutorial Requirements
+Note: This tutorial targets the VCK190 evaluation board, but the methodology flow also applies to the VMK180 evaluation board.
+
+
+#### Hardware Requirements:
+
+* Host machine with an operating system supported by Vivado Design Suite and Vitis 2023.1
+* VCK190 Evaluation Board, which includes:
+  * Versal ACAP XCVC1902-2VSVA2197
+  * AC power adapter (100-240VAC input, 12VDC 15.0A output).
+  * System controller microSD card in socket (J302).
+  * USB Type-C cable (for JTAG and UART communications).
+  * Boot Module X-EBM-03 (OSPI)
+
+#### Software Requirements:
+In order to build and run the tutorial reference design, the following must be available or installed:
+  * Vivado Design Suite and Vitis 2023.1:
+  	- Visit https://www.xilinx.com/support/download.html for the latest tool version.
+  	- For more information on installing the Vivado Design Suite and Vitis, refer to [UG1400 Vitis Unified Software Platform Embedded Software Development](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2023_1/ug1400-vitis-embedded.pdf).
+  * Scripts to generate the reference design are provided in the `Scripts` directory 
+  * UART serial terminal recommended:
+	- Vitis serial Terminal or a terminal emulator program for UART (i.e. Putty or Tera Term) can be used to display valuable PLM log boot status.  
+    - When UART is not available, Vivado Design Suite and Vitis xsct/xsdb command line tools can be used to read the plm log after a boot attempt.
+
