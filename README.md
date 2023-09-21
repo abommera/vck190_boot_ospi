@@ -1,5 +1,5 @@
 <tr>
-   <td align="center"><img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-logo.png?raw=true" width="30%"/><h1>2021.1 Versal OSPI Boot Tutorial </h1>
+   <td align="center"><img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-logo.png?raw=true" width="30%"/><h1>2023.1 Versal OSPI Boot Tutorial </h1>
    </td>
  </tr>
 </table>
@@ -47,3 +47,44 @@ OSPI_Boot
 |___README.md...............Includes tutorial overview, steps to create reference design, and debug resources
 ```
 </details>
+
+# Before You Begin
+
+Recommended general knowledge of:
+* VCK190 evaluation board
+* Versal OSPI boot mode 
+* Versal PMC
+* Xilinx Vivado Design Suite 
+* Xilinx Vites IDE
+
+<details>
+
+<summary> Key Versal Reference Documents </summary>
+
+* VCK190 Evaluation Board User Guide [(UG1366)](https://docs.xilinx.com/r/en-US/ug1366-vck190-eval-bd))
+* Versal Technical Reference Manual [(AM011)](https://www.xilinx.com/support/documentation/architecture-manuals/am011-versal-acap-trm.pdf)
+* Versal System Software Developers User Guide [(UG1304)](https://www.xilinx.com/cgi-bin/docs/rdoc?v=latest;d=ug1304-versal-acap-ssdg.pdf)
+* Versal Control Interfaces and Processing System (CIPS) [(PG352)](https://www.xilinx.com/cgi-bin/docs/ipdoc?c=versal_cips;v=latest;d=pg352-cips.pdf)
+
+</details>
+
+<details>
+
+<summary> Versal Terms </summary>
+
+|Term|Description|
+|  ---  |  ---  |
+|Platform management controller (PMC)|Manages Versal ACAP boot and the life cycle management of the device. The PMC ROM Code Unit (RCU) and platform processing unit (PPU) are responsible for booting the device.|
+|ROM code unit (RCU)| Includes a microblaze processor that executes the BootROM to initiate the boot phase2: boot setup.|
+|Platform processing unit (PPU)|Includes a microblaze processor that executes the platform loader and manager (PLM) to initiate the boot phase3: load platform.|
+|Scalar engines|Includes the processing system (PS) Dual-Core ARM Cortex R5F and A72.|
+|Adaptable engines|Includes Versal adaptable hardware also referred to in this tutorial as programmable logic (PL).|
+|Control Interfaces and Processing System (CIPS)|CIPS LogiCORE IP sets the configuration of PMC/PS peripherals, clocks, and MIO.|
+|BootROM|Responsible for initial security and boot mode interface checks. Reads and processes the PDI boot header. Releases the PMC PPU to complete the boot phases. See the Versal Technical Reference Manual [(AM011)](https://www.xilinx.com/support/documentation/architecture-manuals/am011-versal-acap-trm.pdf) for more detail on BootROM.|
+|Platform loader and manager (PLM)|Responsible for the final boot phases to load the PDI. Executes supported platform management libraries and application user code. See the Versal System Software Developers User Guide [(UG1304)](https://www.xilinx.com/cgi-bin/docs/rdoc?v=latest;d=ug1304-versal-acap-ssdg.pdf) for more detail on the PLM.|
+|Programmable device image (PDI)|Boot image for programming and configuring the Versal ACAP device. See the BootGen UG1283 for details on the format. See system software developers user guide for details on how PLM manages the images and partitions.|
+|MIO| Multiplexed IO pins that can be configured for different peripherals and functions.|
+|DIO| Dedicated IO pins dedicated for specific functions, such as JTAG (TCK, TMS, TDI, TDO) or power-on reset (POR_B).|
+
+</details>
+
