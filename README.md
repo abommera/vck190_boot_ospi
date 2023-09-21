@@ -169,7 +169,25 @@ In helloworld.c (../Software/Vitis/hello_a72_0/src), add a delay to avoid applic
  Be sure to re-build the Hello world application after the changes are applied.
 
 #### **Generate a Boot Image (PDI)**:
-Generate a Boot Image (PDI) using the following bootgen command and the output.bif already present in the `Software/Vitis/bootimage` folder:
+Generate a Boot Image (PDI) using the following bootgen command and the output.bif already present in the `Design/Software/bootimage` folder:
 ```
 bootgen -arch versal -image output.bif -o BOOT.PDI -w
+```
+output.bif:
+```
+/*vck190_ospi*/
+the_ROM_image:
+{
+	image 
+	{
+		{ type=bootimage, file= ../vck190_wrapper/hw/vck190_wrapper.pdi  } 
+		{ type=bootloader, file= ../plm/Debug/plm.elf  } 
+	}
+	image
+	{
+		name=apu_subsystem
+		id = 0x1c000000
+		{ core=a72-0, exception_level=el-3, trustzone, file= ../hello_a72_0/Debug/hello_a72_0.elf } 
+	}
+}
 ```
