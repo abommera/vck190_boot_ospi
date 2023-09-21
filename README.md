@@ -112,3 +112,26 @@ In order to build and run the tutorial reference design, the following must be a
 	- Vitis serial Terminal or a terminal emulator program for UART (i.e. Putty or Tera Term) can be used to display valuable PLM log boot status.  
     - When UART is not available, Vivado Design Suite and Vitis xsct/xsdb command line tools can be used to read the plm log after a boot attempt.
 
+# Building Hardware Design  
+
+## Vivado
+
+To set up the Vivado environment:
+* Windows 32-bit: Run the settings32.bat from the Vivado/2023.1 directory
+* Windows 34-bit: Run the settings64.bat from the Vivado/2023.1 directory
+* Linux 32-bit: Run the settings32.sh from the Vivado/2023.1 directory
+* Linux 64-bit: Run the settings64.sh from the Vivado/2023.1 directory
+
+Enter the `Scripts` directory. From the command line run the following to create the project:
+
+`vivado -source project_top.tcl`
+
+The Vivado project will be built in the `Design/Hardware` directory.
+
+Once Vivado opens and the project is created, click on "Generate Device Image".
+
+Wait until "Device Image Generation successfully completed" then "Open Implemented Design".
+Exporting the XSA to the Software folder with the following TCL command:
+```
+write_hw_platform -fixed -include_bit -force -file ../Design/Software/vck190_wrapper.xsa
+```
