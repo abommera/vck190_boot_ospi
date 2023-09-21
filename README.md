@@ -101,7 +101,10 @@ Note: This tutorial targets the VCK190 evaluation board, but the methodology flo
   * System controller microSD card in socket (J302).
   * USB Type-C cable (for JTAG and UART communications).
   * Boot Module X-EBM-03 (OSPI)
-
+    
+#### **NOTE**:
+The Boot Module is currently not available for customers but the steps highlighted in this example can be easily adopted  for a custom board with OSPI connected to Versal. For more information about the Boot Modules contact your Xilinx representative or file a Service Request.
+    
 #### Software Requirements:
 In order to build and run the tutorial reference design, the following must be available or installed:
   * Vivado Design Suite and Vitis 2023.1:
