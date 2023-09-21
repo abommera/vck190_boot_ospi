@@ -138,3 +138,38 @@ Exporting the XSA to the Software folder with the following TCL command:
 ```
 write_hw_platform -fixed -include_bit -force -file ../Design/Software/vck190_wrapper.xsa
 ```
+# Building Software Design 
+
+## Vitis
+
+To set up the Vitis environment:
+* Windows 32-bit: Run the settings32.bat from the Vitis/2023.1 directory
+* Windows 34-bit: Run the settings64.bat from the Vitis/2023.1 directory
+* Linux 32-bit: Run the settings32.sh from the Vitis/2023.1 directory
+* Linux 64-bit: Run the settings64.sh from the Vitis/2023.1 directory
+
+Enter the `Scripts` directory. From the command line run the following:
+
+`xsct -eval source vck190_vitis.tcl`
+
+The Vitis project will be built in the `Design/Software/Vitis` directory.
+
+Launch the Vitis software platform and set the workspace path to `Design/Software/Vitis`.
+
+Apply the following modification to the project. Pre-modified files are present in the `Design/Software/Vitis/src` folder.
+
+#### **SW Application modification**:
+In helloworld.c (../Software/Vitis/hello_a72_0/src), add a delay to avoid application prints collide with the PLM prints.
+
+```
+ sleep(1);
+ print("Hello World\n\r");
+ print("Successfully ran Hello World application from OSPI.");
+ ```
+ Be sure to re-build the Hello world application after the changes are applied.
+
+#### **Generate a Boot Image (PDI)**:
+Generate a Boot Image (PDI) using the following bootgen command and the output.bif already present in the `Software/Vitis/bootimage` folder:
+```
+bootgen -arch versal -image output.bif -o BOOT.PDI -w
+```
