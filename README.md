@@ -1,5 +1,5 @@
 <tr>
-   <td align="center"><img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-logo.png?raw=true" width="30%"/><h1>2023.1 Versal OSPI Boot Tutorial </h1>
+   <td align="center"><img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-logo.png?raw=true" width="30%"/><h1>2021.1 Versal OSPI Boot Tutorial </h1>
    </td>
  </tr>
 </table>
@@ -94,7 +94,7 @@ Note: This tutorial targets the VCK190 evaluation board, but the methodology flo
 
 #### Hardware Requirements:
 
-* Host machine with an operating system supported by Vivado Design Suite and Vitis 2023.1
+* Host machine with an operating system supported by Vivado Design Suite and Vitis 2021.1
 * VCK190 Evaluation Board, which includes:
   * Versal ACAP XCVC1902-2VSVA2197
   * AC power adapter (100-240VAC input, 12VDC 15.0A output).
@@ -107,7 +107,7 @@ The Boot Module is currently not available for customers but the steps highlight
     
 #### Software Requirements:
 In order to build and run the tutorial reference design, the following must be available or installed:
-  * Vivado Design Suite and Vitis 2023.1:
+  * Vivado Design Suite and Vitis 2021.1:
   	- Visit https://www.xilinx.com/support/download.html for the latest tool version.
   	- For more information on installing the Vivado Design Suite and Vitis, refer to [UG1400 Vitis Unified Software Platform Embedded Software Development](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2023_1/ug1400-vitis-embedded.pdf).
   * Scripts to generate the reference design are provided in the `Scripts` directory 
@@ -120,10 +120,10 @@ In order to build and run the tutorial reference design, the following must be a
 ## Vivado
 
 To set up the Vivado environment:
-* Windows 32-bit: Run the settings32.bat from the Vivado/2023.1 directory
-* Windows 34-bit: Run the settings64.bat from the Vivado/2023.1 directory
-* Linux 32-bit: Run the settings32.sh from the Vivado/2023.1 directory
-* Linux 64-bit: Run the settings64.sh from the Vivado/2023.1 directory
+* Windows 32-bit: Run the settings32.bat from the Vivado/2021.1 directory
+* Windows 34-bit: Run the settings64.bat from the Vivado/2021.1 directory
+* Linux 32-bit: Run the settings32.sh from the Vivado/2021.1 directory
+* Linux 64-bit: Run the settings64.sh from the Vivado/2021.1 directory
 
 Enter the `Scripts` directory. From the command line run the following to create the project:
 
@@ -143,10 +143,10 @@ write_hw_platform -fixed -include_bit -force -file ../Design/Software/vck190_wra
 ## Vitis
 
 To set up the Vitis environment:
-* Windows 32-bit: Run the settings32.bat from the Vitis/2023.1 directory
-* Windows 34-bit: Run the settings64.bat from the Vitis/2023.1 directory
-* Linux 32-bit: Run the settings32.sh from the Vitis/2023.1 directory
-* Linux 64-bit: Run the settings64.sh from the Vitis/2023.1 directory
+* Windows 32-bit: Run the settings32.bat from the Vitis/2021.1 directory
+* Windows 34-bit: Run the settings64.bat from the Vitis/2021.1 directory
+* Linux 32-bit: Run the settings32.sh from the Vitis/2021.1 directory
+* Linux 64-bit: Run the settings64.sh from the Vitis/2021.1 directory
 
 Enter the `Scripts` directory. From the command line run the following:
 
