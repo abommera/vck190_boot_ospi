@@ -192,3 +192,163 @@ the_ROM_image:
 	}
 }
 ```
+## **Running the Design**
+#### **NOTE**:
+Find vck190_wrapper.pdi in vivado project build directory and name it `vck190_ospi_prog.pdi` and use it in the flash programming steps below to make it faster.
+
+Execute the following command on XSCT in order to program the BOOT.PDI file into OSPI flash. Xilinx strongly recommend to boot the Versal Device in JTAG boot mode (SW1 = 0000 (all ON)) to reliably program the OSPI.
+```
+xsct% program_flash -f BOOT.PDI -pdi vck190_ospi_prog.pdi -offset 0x0 -flash_type ospi-x8-single
+```
+#### **Flash programming log**:
+```
+
+xsdb% program_flash -f BOOT.PDI -pdi design_1_wrapper.pdi -offset 0x0 -flash_type ospi-x8-single -url TCP:XXXXXXXXX:XXXX
+WARNING: [Common 17-259] Unknown Tcl command 'program_flash -f BOOT.PDI -pdi design_1_wrapper.pdi -offset 0x0 -flash_type ospi-x8-single -url TCP:XXXXXXXXX:XXXX' sending
+command to the OS shell for execution. It is recommended to use 'exec' to send the command to the OS shell.
+
+****** Xilinx Program Flash
+****** Program Flash v2021.1 (64-bit)
+  **** SW Build 3246112 on 2021-06-09-14:19:56
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+
+Connected to hw_server @ TCP:XXXXXXXXX:XXXX
+
+Retrieving Flash info...
+
+Initialization done
+Using default mini u-boot image file - ../Vitis/2021.1/data/xicom/cfgmem/uboot/versal_ospi_x8_single.bin
+
+
+U-Boot 2021.01-08077-gfb43236 (May 17 2021 - 10:30:49 -0600)
+
+Model: Xilinx Versal MINI OSPI SINGLE
+DRAM:  WARNING: Initializing TCM overwrites TCM content
+256 KiB
+EL Level:	EL3
+Versal> sf probe 0 0 0
+SF: Detected mt35xu02g with page size 256 Bytes, erase size 4 KiB, total 256 MiB
+Versal> Sector size = 4096.
+Total size = 268435456.
+f probe 0 0 0
+Performing Erase Operation...
+sf erase 0 197000
+SF: 1667072 bytes @ 0x0 Erased: OK
+Versal> Erase Operation successful.
+INFO: [Xicom 50-44] Elapsed time = 7 sec.
+Performing Program Operation...
+0%...sf write FFFC0000 0 20000
+device 0 offset 0x0, size 0x20000
+SF: 131072 bytes @ 0x0 Written: OK
+Versal> sf write FFFC0000 20000 20000
+device 0 offset 0x20000, size 0x20000
+SF: 131072 bytes @ 0x20000 Written: OK
+Versal> sf write FFFC0000 40000 20000
+device 0 offset 0x40000, size 0x20000
+SF: 131072 bytes @ 0x40000 Written: OK
+Versal> sf write FFFC0000 60000 20000
+device 0 offset 0x60000, size 0x20000
+SF: 131072 bytes @ 0x60000 Written: OK
+Versal> sf write FFFC0000 80000 20000
+device 0 offset 0x80000, size 0x20000
+SF: 131072 bytes @ 0x80000 Written: OK
+Versal> sf write FFFC0000 A0000 20000
+device 0 offset 0xa0000, size 0x20000
+SF: 131072 bytes @ 0xa0000 Written: OK
+Versal> 50%...sf write FFFC0000 C0000 20000
+device 0 offset 0xc0000, size 0x20000
+SF: 131072 bytes @ 0xc0000 Written: OK
+Versal> sf write FFFC0000 E0000 20000
+device 0 offset 0xe0000, size 0x20000
+SF: 131072 bytes @ 0xe0000 Written: OK
+Versal> sf write FFFC0000 100000 20000
+device 0 offset 0x100000, size 0x20000
+SF: 131072 bytes @ 0x100000 Written: OK
+Versal> sf write FFFC0000 120000 20000
+device 0 offset 0x120000, size 0x20000
+SF: 131072 bytes @ 0x120000 Written: OK
+Versal> sf write FFFC0000 140000 20000
+device 0 offset 0x140000, size 0x20000
+SF: 131072 bytes @ 0x140000 Written: OK
+Versal> sf write FFFC0000 160000 20000
+device 0 offset 0x160000, size 0x20000
+SF: 131072 bytes @ 0x160000 Written: OK
+Versal> 100%
+sf write FFFC0000 180000 16D70
+device 0 offset 0x180000, size 0x16d70
+SF: 93552 bytes @ 0x180000 Written: OK
+Versal> Program Operation successful.
+INFO: [Xicom 50-44] Elapsed time = 15 sec.
+
+Flash Operation Successful
+```
+#### **Boot the Boot Image (PDI) from OSPI**:
+There are two ways to test the design once the OSPI is programmed.
+
+##### **Method #1**:
+Change the Versal Device boot mode to OSPI (SW1 = 0001 (ON-ON-ON-OFF)) and power on the board.
+
+##### **Method #2**: 
+Change the Versal Device boot mode to JTAG (SW1 = 0000 (ON-N-ON-ON)), power on the board and run the following script:
+```
+tar -set -filter {name =~ "Versal *"}
+# Enable ISO
+mwr -force 0xf1120000 0xffbff
+# Switch boot mode
+mwr 0xf1260200 0x8100
+mrd 0xf1260200
+# Set MULTIBOOT address to 0
+mwr -force 0xF1110004 0x0
+# SYSMON_REF_CTRL is switched to NPI by user PDI so ensure its
+# switched back
+mwr -force 0xF1260138 0
+mwr -force 0xF1260320 0x77
+# Perform reset
+tar -set -filter {name =~ "PMC"}
+rst
+```
+This script change the boot mode from JTAG to OSPI without the need of power cycle the board.
+
+#### **PLM log when booting from OSPI**:
+To see the PLM Log the user can look at the UART console or use the XSDB command "plm log" from target 1 (`tar -set -filter {name =~ "Versal *"}`):
+
+``` 
+[340.116]****************************************
+[344.565]Xilinx Versal Platform Loader and Manager 
+[349.187]Release 2021.1   Jun 28 2021  -  10:19:41
+[353.722]Platform Version: v1.0 PMC: v1.0, PS: v1.0
+[358.343]BOOTMODE: 0x8, MULTIBOOT: 0x0
+[361.832]****************************************
+[366.320] 57.275 ms for Partition#: 0x1, Size: 2288 Bytes
+[371.423]---Loading Partition#: 0x2, Id: 0xB
+[376.002] 0.536 ms for Partition#: 0x2, Size: 48 Bytes
+[380.316]---Loading Partition#: 0x3, Id: 0xB
+[384.536] 0.175 ms for Partition#: 0x3, Size: 60592 Bytes
+[389.471]---Loading Partition#: 0x4, Id: 0xB
+[393.544] 0.029 ms for Partition#: 0x4, Size: 5968 Bytes
+[398.539]---Loading Partition#: 0x5, Id: 0xB
+[402.595] 0.012 ms for Partition#: 0x5, Size: 80 Bytes
+[407.496]+++Loading Image#: 0x2, Name: pl_cfi, Id: 0x18700000
+[412.929]---Loading Partition#: 0x6, Id: 0x3
+[466.471] 49.495 ms for Partition#: 0x6, Size: 707472 Bytes
+[468.945]---Loading Partition#: 0x7, Id: 0x5
+[498.177] 25.186 ms for Partition#: 0x7, Size: 427680 Bytes
+[500.692]+++Loading Image#: 0x3, Name: fpd, Id: 0x0420C003
+[505.885]---Loading Partition#: 0x8, Id: 0x8
+[510.371] 0.440 ms for Partition#: 0x8, Size: 1024 Bytes
+[515.248]+++Loading Image#: 0x4, Name: subsystem, Id: 0x1C000000
+[520.718]---Loading Partition#: 0x9, Id: 0x3
+[525.215] 0.451 ms for Partition#: 0x9, Size: 163920 Bytes
+[530.054]***********Boot PDI Load: Done***********
+[534.538]27.785 ms: ROM Time
+[537.122]Total PLM Boot Time 
+Hello World
+Successfully ran Hello World application from ospi
+```
+
+## **Conclusion**
+
+The design steps and build instructions are used to create an OSPI boot image and the new bif format helps to add user partitions. The plm boot log gives partitions load information with the boot times.
+
+© Copyright [2020] Xilinx, Inc. All rights reserved.
