@@ -33,14 +33,6 @@ set_property BOARD_PART ${board_part} [current_project]
 # Source the BD file, BD naming convention is <PROJECT_NAME>_bd.tcl
 source ${project_name}_bd.tcl
 
-#Set the path to the constraints file:
-set impl_const ../Design/Hardware/constraints/no_compression.xdc
-
-if [file exists ${impl_const}] {
-    add_files -fileset constrs_1 -norecurse ./${impl_const}
-    set_property used_in_synthesis true [get_files ./${impl_const}]
-}
-
 make_wrapper -files [get_files ${proj_dir}/${project_name}.srcs/sources_1/bd/${project_name}/${project_name}.bd] -top
 
 add_files -norecurse ${proj_dir}/${project_name}.srcs/sources_1/bd/${project_name}/hdl/${project_name}_wrapper.v
